@@ -140,7 +140,7 @@ class Admin extends MY_Controller
             // print_r($data);
             // exit;
             // $image = base_url("upload/" . $data['raw_name'] . $data['file_ext']);
-            // $post['image'] = $image;
+            // $post['captured_image_data'] = $image;
             $this->load->model('loginmodel');
             $student_details = $this->loginmodel->StudentForm($post);
             // print_r($student_details);

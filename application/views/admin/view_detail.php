@@ -106,10 +106,9 @@
                                                                         <tr>
                                                                             <td><?php echo $r["createdDate"] ?></td>
                                                                             <td><?php echo $r["amount"] ?></td>
-                                                                            <!-- <?php foreach ($user as $u) : ?>
-                                                                            <td><?php echo $u['createdBy'] . $u["username"] ?>
+                                                                            <td><?php echo $user[0]['username'];  ?>
                                                                             </td>
-                                                                            <?php endforeach; ?> -->
+
 
 
                                                                         </tr>
