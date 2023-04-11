@@ -21,7 +21,8 @@
                     <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1 class="m-0 text-center"> Student Enquiry Details</h1>
-                        </div><!-- /.col -->
+                        </div>
+                        <!-- /.col -->
                         <div class="col-sm-6">
                             <!-- <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -31,7 +32,20 @@
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
+            <?php if ($msg = $this->session->flashdata('msg')) {
+                $msg_class = $this->session->flashdata('msg_class')
+
+            ?>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="alert <?= $msg_class ?>">
+                            <?php echo  $msg; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <!-- /.content-header -->
+            
 
             <!-- Main content -->
             <section class="content">
@@ -49,17 +63,26 @@
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'name', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
                                     </div>
                                 </div>
+                                <div class="col-lg-6" style="margin-top: 40px;">
+                                    <?php echo form_error('name') ?>
+                                </div>
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Contact</label>
                                     <div class="col-sm-6">
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'contact', 'id' => 'scontact', 'placeholder' => 'Enter Contact']); ?>
                                     </div>
                                 </div>
+                                <div class="col-lg-6" style="margin-top: 40px;">
+                                    <?php echo form_error('name') ?>
+                                </div>
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-6">
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'email', 'id' => 'scontact', 'placeholder' => 'Enter Email']); ?>
                                     </div>
+                                </div>
+                                <div class="col-lg-6" style="margin-top: 40px;">
+                                    <?php echo form_error('email') ?>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Interest in
@@ -68,55 +91,25 @@
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'interest_course', 'id' => 'scontact', 'placeholder' => 'Enter Course']); ?>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Courses</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'scourse', 'id' => 'scourse', 'placeholder' => 'Enter Course']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">DOJ</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sdoj', 'id' => 'sname', 'placeholder' => 'Enter Date of Joining']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Total Fess</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sfees', 'id' => 'sfees', 'placeholder' => 'Enter Total Fees']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Advanced Fess</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sname', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
-                    </div>
-                   </div>
-                    <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Balance</label>
-                    <div class="col-sm-10">
-                    <?php echo form_textarea(['class' => 'form-control', 'name' => 'sname', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
-                    </div>
-                  </div> -->
+                                <div class="col-lg-6" style="margin-top: 40px;">
+                                    <?php echo form_error('interest_course') ?>
+                                </div>
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Remark</label>
                                     <div class="col-sm-6">
                                         <?php echo form_textarea(['class' => 'form-control', 'name' => 'remark', 'id' => 'sname', 'placeholder' => 'Enter Remarks']); ?>
                                     </div>
+                                    <div class="col-lg-6" style="margin-top: 40px;">
+                                        <?php echo form_error('remark') ?>
+                                    </div>
                                     <?php validation_errors(); ?>
-                                    <!-- <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                        <label class="form-check-label" for="exampleCheck2">Remember me</label>
-                      </div>
-                    </div>
-                  </div> -->
+
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">Save</button>
-                                    <button type="submit" class="btn btn-default float-right">Go Back</button>
+                                    <?php echo anchor('admin/Dashboard', '  Go back ', 'class="btn btn-default float-right"');?>
+                                    <!-- <button type="submit" class="btn btn-default float-right">Go Back</button> -->
                                 </div>
                                 <!-- /.card-footer -->
                                 </form>

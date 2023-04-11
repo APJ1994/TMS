@@ -87,25 +87,21 @@
                 </li>
 
                 <li class="nav-item">
-                    <?php if ($this->session->userdata('id')) { ?> <a href="<? base_url('admin/logout'); ?>" class="nav-link">
-                        <?php } ?>
-                        <i class="nav-icon fas fa-power-off"></i>
-                        <p>
-                            Logout
-                        </p>
+                    <?php if ($this->session->userdata('id')) { ?>
+                        <a href="<?= base_url('admin/logout'); ?>" class="nav-link">
+                            <i class="nav-icon fas  fa-power-off"></i>
+                            <p>
+                                Logout
+                            </p>
                         </a>
-
+                    <?php } ?>
 
                 </li>
 
 
 
 
-                <?php if ($this->session->userdata('id')) { ?>
-                    <li class="nav-item ">
-                        <a href="<?= base_url('admin/logout'); ?>" class="btn btn-danger">Logout</a>
-                    </li>
-                <?php } ?>
+
 
 
             </ul>

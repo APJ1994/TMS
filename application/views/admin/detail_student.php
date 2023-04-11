@@ -23,6 +23,18 @@
             <h1 class="m-0 text-center"> Student Details</h1>
 
         </div>
+        <?php if ($msg = $this->session->flashdata('msg')) {
+            $msg_class = $this->session->flashdata('msg_class')
+
+        ?>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="alert <?= $msg_class ?>">
+                        <?php echo  $msg; ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
         <!-- /.content-header -->
 
         <!-- Main content -->
@@ -39,7 +51,7 @@
                     <?php echo form_input(['class' => 'form-control', 'name' => 'name', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
                 </div>
             </div>
-
+            <?php echo form_error('name') ?>
 
             <div class="form-goup row mt-2">
                 <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Contact Number</label>
@@ -47,12 +59,14 @@
                     <?php echo form_input(['class' => 'form-control', 'name' => 'contact', 'id' => 'scontact', 'placeholder' => 'Enter Contact']); ?>
                 </div>
             </div>
+            <?php echo form_error('contact') ?>
             <div class="form-goup row mt-2">
                 <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Remark</label>
                 <div class=" col-sm-6">
                     <?php echo form_input(['class' => 'form-control', 'name' => 'remark', 'id' => 'sname', 'placeholder' => 'Enter Remarks']); ?>
                 </div>
             </div>
+            <?php echo form_error('remark') ?>
             <div class=" col-sm-6 mb-2">
                 <span class="d-inline-block" style="margin:30px 0 0 176px" tabindex="0" data-bs-toggle="tooltip" data-bs-title="Disabled tooltip">
                     <a href="<?= base_url('admin/WEbcam'); ?>" type="file" class="btn btn-success">Capture
@@ -63,7 +77,7 @@
             <?php validation_errors(); ?>
             <div class="card-footer">
                 <button type="submit" class="btn btn-info">Save</button>
-                <button type="submit" class="btn btn-default float-right">Go Back</button>
+                <?php echo anchor('admin/StudentAdmission', '  Go back ', 'class="btn btn-default float-right"');?>
             </div>
 
             </form>

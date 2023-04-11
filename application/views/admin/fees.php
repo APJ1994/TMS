@@ -33,7 +33,18 @@
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
+            <?php if ($msg = $this->session->flashdata('msg')) {
+                $msg_class = $this->session->flashdata('msg_class')
 
+            ?>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="alert <?= $msg_class ?>">
+                            <?php echo  $msg; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
@@ -56,6 +67,7 @@
                                         <?php endif; ?>
                                     </select>
                                 </div>
+                                <?php echo form_error('sname');?>
                                 <div class="container me-4">
                                     <div class="form-group row ">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Student
@@ -66,42 +78,15 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Courses</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'scourse', 'id' => 'scourse', 'placeholder' => 'Enter Course']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">DOJ</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sdoj', 'id' => 'sname', 'placeholder' => 'Enter Date of Joining']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Total Fess</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sfees', 'id' => 'sfees', 'placeholder' => 'Enter Total Fees']); ?>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Advanced Fess</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sname', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
-                    </div>
-                   </div>
-                    <div class="form-group row">
-                    <label for="inputPassword3" class="col-sm-2 col-form-label">Balance</label>
-                    <div class="col-sm-10">
-                    <?php echo form_input(['class' => 'form-control', 'name' => 'sname', 'id' => 'sname', 'placeholder' => 'Enter Full Name']); ?>
-                    </div>
-                  </div> -->
+                                <?php echo form_error('scourse'); ?>
+
                                 <div class="form-group row">
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Student Total
                                         Fees</label>
                                     <div class="col-sm-2">
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'tfees', 'id' => 'stotal', 'placeholder' => 'Enter Total Fees', 'readonly' => 'readonly']); ?>
                                     </div>
+                                    <?php echo form_error('tfees') ?>
 
                                     <!-- <div class="form-group row"> -->
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Remaining
@@ -110,6 +95,7 @@
                                     <div class="col-sm-2">
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'rfees', 'id' => 'srem', 'placeholder' => 'Enter Remaining Fees']); ?>
                                     </div>
+                                    <?php echo form_error('rfees') ?>
                                     <!-- </div> -->
 
                                     <!-- <div class="form-group row"> -->
@@ -119,6 +105,7 @@
                                         <?php echo form_input(['class' => 'form-control', 'name' => 'pfees', 'id' => 'pfees', 'placeholder' => 'Paid Fees']); ?>
                                     </div>
                                 </div>
+                                <?php echo form_error('pfees') ?>
 
                             </div>
                             <?php validation_errors(); ?>
@@ -165,64 +152,16 @@
                                     });
 
 
-                                    // $(document).ready(function(){
-                                    //   $('#scourse').change(function(){
-                                    //     var sid=$('#scourse').val();
-                                    //     if(sid!='')
-                                    //     {
-                                    //       $.ajax({
-                                    //         url:"<?php echo base_url(); ?>admin/",
-                                    //         method:"POST",
-                                    //         data:{sid:sid},
-                                    //         sucess:function(data)
-                                    //         {
-                                    //           $('#stotal').html(data);
-                                    //           $('#srem').html('');
-                                    //         }
-                                    //       });
-                                    //       else{
-                                    //         $('#stotal').html();
-                                    //         $('#srem').html();
 
-                                    //       }
-                                    //     }
-                                    //   });
-                                    //   $(document).ready(function(){
-                                    //     $('#stotal').change(function(){
-                                    //       var tid=$('#stotal').val();
-                                    //       if(tid!='')
-                                    //       {
-                                    //         $.ajax({
-                                    //           url:"<?php echo base_url(); ?>admin/",
-                                    //           method:"POST",
-                                    //           data:{tid:tid},
-                                    //           success:function(data)
-                                    //           {
-                                    //             $('#srem').html();
-                                    //           }
-                                    //         });
-                                    //         else{
-                                    //           $('#rem').html();
-                                    //         }
-                                    //       }
-                                    //     });
-                                    //   });
 
                                 });
                             </script>
-                            <!-- <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                        <label class="form-check-label" for="exampleCheck2">Remember me</label>
-                      </div>
-                    </div>
-                  </div> -->
+
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info">Save</button>
-                            <button type="submit" class="btn btn-default float-right">Go Back</button>
+                            <?php echo anchor('admin/GetStudent', '  Go back ', 'class="btn btn-default float-right"');?>
                         </div>
                         <!-- /.card-footer -->
                         </form>

@@ -31,15 +31,14 @@
                                     <div class="col-sm-4 invoice-col">
                                         To
                                         <?php if (count($student)) : ?>
-                                        <?php foreach ($student as $stu) : ?>
-                                        <address>
-                                            <strong><?= $stu['name'] ?></strong><br>
-                                            <?= $stu['contact']; ?><br>
+                                            <?php foreach ($student as $stu) : ?>
+                                                <address>
+                                                    <strong><?= $stu['name'] ?></strong><br>
+                                                    <?= $stu['contact']; ?><br>
 
-                                            Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                                data-cfemail="aec4c1c6c080cac1cbeecbd6cfc3dec2cb80cdc1c3">[email&#160;protected]</a>
-                                        </address>
-                                        <?php endforeach; ?>
+                                                    Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aec4c1c6c080cac1cbeecbd6cfc3dec2cb80cdc1c3">[email&#160;protected]</a>
+                                                </address>
+                                            <?php endforeach; ?>
                                         <?php else : ?>
                                         <?php endif; ?>
                                     </div>
@@ -67,65 +66,62 @@
                                                 $fee_sum = 0;
                                                 $paidfee = 0;
                                                 foreach ($courses as $c) : ?>
-                                                <div id="accordion">
-                                                    <div class="card card-primary">
-                                                        <div class="card-header">
-                                                            <h4 class="card-title w-100">
-                                                                <a class="d-block w-100" data-toggle="collapse"
-                                                                    href="#collapse<?= $c["stu_course_id"] ?>">
-                                                                    Course Name -
-                                                                    <?php $fee_sum += $c["fees"]; ?>
-                                                                    <?php echo $c["name"] . " | Course Fee -  " . $c["fees"] ?>
-                                                                </a>
-                                                            </h4>
-                                                        </div>
-                                                        <div id="collapse<?= $c["stu_course_id"] ?>"
-                                                            class="collapse <?= $count == 0 ? "show" : "" ?> "
-                                                            data-parent="#accordion">
-                                                            <div class="card-body">
+                                                    <div id="accordion">
+                                                        <div class="card card-primary">
+                                                            <div class="card-header">
+                                                                <h4 class="card-title w-100">
+                                                                    <a class="d-block w-100" data-toggle="collapse" href="#collapse<?= $c["stu_course_id"] ?>">
+                                                                        Course Name -
+                                                                        <?php $fee_sum += $c["fees"]; ?>
+                                                                        <?php echo $c["name"] . " | Course Fee -  " . $c["fees"] ?>
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="collapse<?= $c["stu_course_id"] ?>" class="collapse <?= $count == 0 ? "show" : "" ?> " data-parent="#accordion">
+                                                                <div class="card-body">
 
-                                                                <?php
+                                                                    <?php
                                                                     $res = $this->db->get_where("fees", ["pursue_id" => $c["stu_course_id"]]);
                                                                     if ($res->num_rows() > 0) {
                                                                         $res = $res->result_array();
                                                                     ?>
-                                                                <table class="table table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Date</th>
-                                                                            <th>Amount</th>
-                                                                            <th>Created By</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
+                                                                        <table class="table table-striped">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Date</th>
+                                                                                    <th>Amount</th>
+                                                                                    <th>Created By</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
 
-                                                                        <?php foreach ($res as $r) : ?>
-                                                                        <?php $paidfee += $r["amount"]; ?>
-
-
-                                                                        <tr>
-                                                                            <td><?php echo $r["createdDate"] ?></td>
-                                                                            <td><?php echo $r["amount"] ?></td>
-                                                                            <td><?php echo $user[0]['username'];  ?>
-                                                                            </td>
+                                                                                <?php foreach ($res as $r) : ?>
+                                                                                    <?php $paidfee += $r["amount"]; ?>
 
 
-
-                                                                        </tr>
-                                                                        <?php endforeach; ?>
+                                                                                    <tr>
+                                                                                        <td><?php echo $r["createdDate"] ?></td>
+                                                                                        <td><?php echo $r["amount"] ?></td>
+                                                                                        <td><?php echo $user[0]['username'];  ?>
+                                                                                        </td>
 
 
 
-                                                                    </tbody>
-                                                                </table>
-                                                                <?php } else {
+                                                                                    </tr>
+                                                                                <?php endforeach; ?>
+
+
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    <?php } else {
                                                                         echo "No Records";
                                                                     } ?>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
+                                                    </div>
                                                 <?php $count++;
                                                 endforeach;  ?>
                                             </div>
@@ -140,7 +136,7 @@
 
 
                                     <div class="col-12">
-                                        <p class="lead">Amount Due 2/22/2014</p>
+                                        <p class="lead"></p>
                                         <div class="table-responsive">
                                             <table class="table">
 

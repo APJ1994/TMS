@@ -6,7 +6,6 @@ class Admin extends MY_Controller
     public function index()
     {
         $this->load->view('admin/index');
-        // $this->form_validation->set_rules();
         $this->form_validation->set_rules('uname', 'User Name', 'required|alpha');
         $this->form_validation->set_rules('pass', 'Password', 'required|max_length[12]');
         $this->form_validation->set_error_delimiters("<div class='text-danger'>", "</div>");
@@ -17,23 +16,18 @@ class Admin extends MY_Controller
             $this->load->model('loginmodel');
             $login_id = $this->loginmodel->isvalidate($uname, $pass);
 
+
             if ($login_id) {
                 $this->session->set_userdata('id', $login_id);
                 return redirect('admin/dashboard');
             } else {
 
-                $this->session->set_flashdata('Login_Failed', 'Innvalid Usrname/Password');
+                $this->session->set_flashdata('Login_Failed', 'Invalid Usrname/Password');
                 redirect('admin/index');
             }
-
-
-            // echo "Sucessfull";
-
-
         } else {
             echo validation_errors();
             // $this->load->view('users/main');
-
 
         }
         if ($this->session->userdata('id')) {
@@ -81,34 +75,12 @@ class Admin extends MY_Controller
             $this->load->view('admin/register');
         }
     }
-
-    //    $post=$this->input->post();
-    //     $this->load->model('loginmodel','user_add');
-    //     if($this->user_add->add_user($post)){
-    //        $this->session->set_flashdata('Login_Failed','User Added Sucessfully');
-    //     //    $this->session->set_flashdata('user_class','alert-success');
-    //     }
-    //     else{
-    //        $this->session->set_flasdata('Login_Failed','User not Added PLease try Again');
-    //     //    $this->session->set_flashdata('user_class','alert-danger');
-
-
-    //     }
-    //     return redirect('admin/register');
-
-
-
-
     public function logout()
     {
         $this->session->unset_userdata('id');
         return redirect('admin/index');
     }
 
-    // public function StudentDetail()
-    // {
-    //     $this->load->view('admin/student');
-    // }
     public function AddStudent()
     {
         $this->load->view('admin/detail_student');
@@ -122,16 +94,8 @@ class Admin extends MY_Controller
         // ];
 
         // $this->load->library('upload', $config);
-        //  $this->form_validation->set_rules('name','Full Name','required');
-        // $this->form_validation->set_rules('contact','Contact','required');
-        //  $this->form_validation->set_rules('remark','Remarks','required');
-        //  $this->form_validation->set_rules('screated','Created','required');
         // $this->form_validation->set_error_delimiters("<div class='text-danger'>", "</div>");
         if ($this->form_validation->run('add_student_rules')) {
-            // $name=$this->input->post('name');
-            // $contact=$this->input->post('contact');
-            // $remark=$this->input->post('remark');
-            // $created=$this->input->post('screated');
 
 
             $post = $this->input->post();
@@ -145,15 +109,17 @@ class Admin extends MY_Controller
             $student_details = $this->loginmodel->StudentForm($post);
             // print_r($student_details);
             if ($student_details) {
-                echo 'successfull';
-                // } else {
-                //     echo 'Unsucess Full';
-                // }
+                $this->session->set_flashdata('msg', 'Student Detail Insert Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
             } else {
-                echo validation_errors();
+                $this->session->set_flashdata('msg', 'Student Detail Not Added');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
             }
-            //  return redirect('admin/AddStudent');
+            
+        } else {
+            echo validation_errors();
         }
+        $this->load->view('admin/detail_student');
     }
 
     public function CourseDetail()
@@ -168,31 +134,40 @@ class Admin extends MY_Controller
             $this->load->model('loginmodel');
             $course_detail = $this->loginmodel->Course_Form($post);
             if ($course_detail) {
-                echo 'Course Added Succesfully';
+                $this->session->set_flashdata('msg', 'Courses Added Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
             } else {
-                echo 'Course Added Succesfully';
+                $this->session->set_flashdata('msg', 'Courses not Added Please try again!!');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
             }
+            
         } else {
             echo validation_errors();
         }
+        $this->load->view('admin/course_detail');
     }
-
-    //    public function StudentPursue(){
-    //     $this->load->view('admin/student_purse');
-    //    }
-
     public function GetStudent()
     {
-        //    $this->load->view('admin/student_purse');
 
-        // $this->loginmodel->get_student_name();
-        // $this->loginmodel->get_course_name();
         $this->load->model('loginmodel');
         $data['student'] = $this->db->get("student")->result_array();
         $data['courses'] = $this->db->get("course_master")->result_array();
-        // $data['course'] = $this->loginmodel->get_course_name();
-        // $data['course_master'] = $this->db->get("course_master")->result_array();
+
         $this->load->view('admin/student_purse', $data);
+    }
+
+    public function PersueFees($courseId)
+    {
+        $this->load->model('loginmodel');
+        $data = $this->db->query("SELECT fees FROM `course_master` where course_id=$courseId");
+        if ($data->num_rows() > 0) {
+            $data = $data->row();
+            $resp = ['fees'];
+            if ($data->fees) {
+                $resp['fees'] = $data->fees;
+                echo json_encode($resp);
+            }
+        }
     }
 
     public function PersueForm()
@@ -203,11 +178,17 @@ class Admin extends MY_Controller
             $this->load->model('loginmodel');
             $persue = $this->loginmodel->Persue_Form($stu, $crr);
             if ($persue) {
-                echo 'Student Persue Added Succesfully';
+                $this->session->set_flashdata('msg', 'Student Persue Details Added Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
             } else {
-                echo validation_errors();
+                $this->session->set_flashdata('msg', 'Student Persue Details  Not Added');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
             }
+            
+        } else {
+            echo validation_errors();
         }
+        // $this->load->view('admin/student_purse');
     }
 
     public function Fees()
@@ -215,10 +196,6 @@ class Admin extends MY_Controller
 
         $this->load->model('loginmodel');
         $data['student'] = $this->db->get("student")->result_array();
-
-
-        // $data['totalFee']=$this->db->query("SELECT fees as  total,(SELECT sum(amount) from fees where pursue_id = student_course_pursue.stu_course_id ) as remaining FROM `student_course_pursue`  WHERE stu_course_id = 1 ")->result_array();
-        // $data['course']=$this->db->query("SELECT * FROM `student_course_pursue` LEFT JOIN course_master on student_course_pursue.course_id=course_master.course_id WHERE student_id")->result_array();
         $this->load->view('admin/fees', $data);
     }
     public function fetchPurseDetailByStudent($student_id)
@@ -230,7 +207,7 @@ class Admin extends MY_Controller
             echo "<option>Select</option>";
             foreach ($data as $key => $value) {
 ?>
-<option value="<?= $value['stu_course_id'] ?>"><?= $value['name'] ?></option>";
+                <option value="<?= $value['stu_course_id'] ?>"><?= $value['name'] ?></option>";
 <?php
             }
         } else {
@@ -286,10 +263,18 @@ class Admin extends MY_Controller
             $id = $this->session->userdata('id');
             // $cpass=$this->input->post('cpass');
             $this->load->model('loginmodel');
-            $this->loginmodel->FeeDetail($sname, $pfees, $id);
+            $fee = $this->loginmodel->FeeDetail($sname, $pfees, $id);
+            if($fee) {
+                $this->session->set_flashdata('msg', 'Fees Detail Insert Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Fees Detail not Added ');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
+            }
         } else {
             echo validation_errors();
         }
+        // $this->load->view('admin/fees');
     }
 
     public function StudentHistory()
@@ -326,12 +311,18 @@ class Admin extends MY_Controller
             $post = $this->input->post();
             $this->load->model('loginmodel');
             $enquiry = $this->loginmodel->Enquiry($post);
-            if ($enquiry) {
-                echo 'Enquiry Added Sucessfully';
+            if($enquiry) {
+                $this->session->set_flashdata('msg', 'Student Detail Insert Successfully');
+                $this->session->set_flashdata('msg_class', 'alert-success');
+            } else {
+                $this->session->set_flashdata('msg', 'Student Detail not Added Please try Again!');
+                $this->session->set_flashdata('msg_class', 'alert-danger');
             }
         } else {
             echo validation_errors();
         }
+        $this->load->view('admin/student_enquiry');
+
     }
 
     public function WEbcam()
@@ -351,5 +342,28 @@ class Admin extends MY_Controller
         $file = $folderPath . uniqid() . '.png';
         file_put_contents($file, $image_base64);
         echo json_encode(["Image uploaded successfully."]);
+    }
+
+    function convertpdf()
+    {
+
+
+        // Get output html
+        $html = $this->output->get_output();
+
+        // Load pdf library
+        $this->load->library('pdf');
+
+        // Load HTML content
+        $this->pdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $this->pdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $this->pdf->render();
+
+        // Output the generated PDF (1 = download and 0 = preview)
+        $this->pdf->stream("welcome.pdf", array("Attachment" => 0));
     }
 }

@@ -37,23 +37,10 @@ class loginmodel extends CI_Model
         }
     }
 
-    public function StudentForm($data)
+    public function StudentForm($array)
     {
 
-        $this->db->insert('student', $data);
-
-        // $student=array(
-        //     'name'=>$name,
-        //     'contact'=>$contact,
-        //     // 'created_by'=>$created,
-        //     'remark'=>$remark);
-        //     $query=$this->db->insert('student',$student);
-        //     if($query){
-        //     $this->session->set_flashdata('Sucess','Deatils Add Sucessfull');
-        //     }
-        //     else{
-        //         $this->session->set_flashdata('Error','Somthing Went Wrong');
-        //     }
+        return $this->db->insert('student', $array);
     }
     public function Course_Form($array)
     {
@@ -65,74 +52,23 @@ class loginmodel extends CI_Model
         return $this->db->insert('student_course_pursue', $array);
     }
 
-    // public function get_student_name()
-    // {
-    //     $query = $this->db->get('student');
-    //     if($query){
-    //         return $query->result_array();
-    //     }
-    // }
-
-
-
-    // public function get_course_name()
-    // {
-    //     $query = $this->db->get('course_master');
-    //     if($query){
-    //         return $query->result();
-    //     }
-    // $q=$this->db->select('name')  
-    //              ->from('student') 
-    //              ->where(['id'=>$id)
-    //              ->get();
-    //              print_r($q);
-    //              exit;
-
-    // }
-
-    // }
-
-    // public function Fees_Form()
-    // {
-    //     $this->db->select("stu.	stu_course_id,stu.fees,name");
-    //     $this->db->from("student_course_pursue as stu");
-    //     $this->db->join("course_master as fe","stu.course_id=fe.course_id","left");
-    //     $query=$this->db->get();
-    //      $result=$query->result();
-    //join student_course_persue=>stu_course_id match persue_id inside fees;
-    // $this->db->select("stu.	stu_course_id ,	student_id,course_id");
-    // $this->db->from("student_course_pursue as stu");
-    // $this->db->join("fees as fe","stu.stu_course_id=fe.pursue_id","left");
-    // $query=$this->db->get();
-    // return $result=$query->result();
-    // $this->db->select('student_course_pursue.stu_course_id,pursue_id');
-    // $this->db->from('student_course_pursue');
-    // $this->db->join('fees', 'fees.pursue_id = student_course_pursue.stu_course_id', 'left');
-    // $query = $this->db->get();
-    //   $this->db->join('fees','fees.pursue_id=student_course_pursue.stu_course_id','left');
-    //   $query=$this->db->get();
-
     public function FeeDetail($persue, $amt, $id)
     {
-        $data = array(
+        $array = array(
             'pursue_id' => $persue,
             'amount' => $amt,
             'createdBy' => $id
         );
-        $query = $this->db->insert('fees', $data);
-        if ($query) {
-            echo 'Student fees Added';
-        } else {
-            echo 'student fees not added';
-        }
+        $query = $this->db->insert('fees', $array);
+        // if ($query) {
+        //     echo 'Student fees Added';
+        // } else {
+        //     echo 'Student fees not added';
+        // }
     }
 
-    public function Enquiry($data)
+    public function Enquiry($array)
     {
-        $this->db->insert(' student_enquiry', $data);
+        return $this->db->insert(' student_enquiry', $array);
     }
-    // public function Image($data)
-    // {
-    //     $this->db->insert('$student', $data);
-    // }
 }
